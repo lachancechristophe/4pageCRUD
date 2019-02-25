@@ -1,24 +1,26 @@
 <?php
 require_once("functions.php");
 
-class Voitures Extends Page {
-
-    function __construct()
+class Voitures extends Page
+{
+    public function __construct()
     {
-        parent::initHTML("Voitures", "style.css");
-        parent::insertHeading();
-        parent::beginBal("table");
-        Voitures::connectAndFetch();
-        parent::endBal("table");
-        parent::endBal("body");
-        parent::endBal("html");
+        $retStr = parent::initHTML("Voitures", "style.css");
+        $retStr .= parent::insertHeading();
+        $retStr .= parent::beginBal("table");
+        $retStr .= Voitures::connectAndFetch();
+        $retStr .= parent::endBal("table");
+        $retStr .= parent::endBal("body");
+        $retStr .= parent::endBal("html");
+        echo $retStr;
     }
 
-    function connectAndFetch() {
+    public function connectAndFetch()
+    {
         $conStr = sprintf("pgsql:host=%s;port=%d;dbname=%s;",
-                "192.168.56.10",
-                '5432',
-                'testdb');
+                          "192.168.56.10",
+                          '5432',
+                          'testdb');
         $user = 'master';
         $pass = '123qweQWE';
 
@@ -30,43 +32,43 @@ class Voitures Extends Page {
         try {
             $pdo = new PDO($conStr, $user, $pass, $options);
             $stmt = $pdo->query('SELECT * FROM voituresexotiques ORDER BY proprietaire_id');
-            
-            Voitures::displayFormatted($stmt);
 
+            return Voitures::displayFormatted($stmt);
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
     }
 
-    function displayFormatted($stmt) {
-        parent::beginBal("tr");
+    public function displayFormatted($stmt)
+    {
+        $retStr = parent::beginBal("tr");
 
-        parent::beginEndBal("td", "ID Voiture");
-        parent::beginEndBal("td", "ID Proprietaire");
-        parent::beginEndBal("td", "Marque");
-        parent::beginEndBal("td", "Modele");
-        parent::beginEndBal("td", "Année");
-        parent::beginEndBal("td", "VIN");
+        $retStr .= parent::beginEndBal("td", "ID Voiture");
+        $retStr .= parent::beginEndBal("td", "ID Proprietaire");
+        $retStr .= parent::beginEndBal("td", "Marque");
+        $retStr .= parent::beginEndBal("td", "Modele");
+        $retStr .= parent::beginEndBal("td", "Année");
+        $retStr .= parent::beginEndBal("td", "VIN");
+        $retStr .= parent::beginEndBal("td", "Supprimer");
 
-        parent::endBal("tr");
+        $retStr .= parent::endBal("tr");
 
-        foreach ($stmt as $row)
-        {
-            parent::beginBal("tr");
+        foreach ($stmt as $row) {
+            $retStr .=  parent::beginBal("tr");
 
-            parent::beginEndBal("td", $row['voiture_id']);
-            parent::beginEndBal("td", $row['proprietaire_id']);
-            parent::beginEndBal("td", $row['marque']);
-            parent::beginEndBal("td", $row['modele']);
-            parent::beginEndBal("td", $row['annee']);
-            parent::beginEndBal("td", $row['vin']);
+            $retStr .= parent::beginEndBal("td", $row['voiture_id']);
+            $retStr .= parent::beginEndBal("td", $row['proprietaire_id']);
+            $retStr .= parent::beginEndBal("td", $row['marque']);
+            $retStr .= parent::beginEndBal("td", $row['modele']);
+            $retStr .= parent::beginEndBal("td", $row['annee']);
+            $retStr .= parent::beginEndBal("td", $row['vin']);
+            $lienSupprimer = "delete.php?voiture_id=" . $row['voiture_id'];
+            $retStr .= parent::beginEndBal("td", parent::createLink($lienSupprimer, "Supprimer"));
 
-            parent::endBal("tr");
+            $retStr .= parent::endBal("tr");
         }
+        return $retStr;
     }
-
 }
 
 $page = new Voitures();
-
-?>

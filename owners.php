@@ -1,24 +1,26 @@
 <?php
 require_once("functions.php");
 
-class Proprietaires Extends Page {
-
-    function __construct()
+class Proprietaires extends Page
+{
+    public function __construct()
     {
-        parent::initHTML("Proprietaires", "style.css");
-        parent::insertHeading();
-        parent::beginBal("table");
-        Proprietaires::connectAndFetch();
-        parent::endBal("table");
-        parent::endBal("body");
-        parent::endBal("html");
+        $retStr = parent::initHTML("Proprietaires", "style.css");
+        $retStr .= parent::insertHeading();
+        $retStr .= parent::beginBal("table");
+        $retStr .= Proprietaires::connectAndFetch();
+        $retStr .= parent::endBal("table");
+        $retStr .= parent::endBal("body");
+        $retStr .= parent::endBal("html");
+        echo $retStr;
     }
 
-    function connectAndFetch() {
+    public function connectAndFetch()
+    {
         $conStr = sprintf("pgsql:host=%s;port=%d;dbname=%s;",
-                "192.168.56.10",
-                '5432',
-                'testdb');
+                          "192.168.56.10",
+                          '5432',
+                          'testdb');
         $user = 'master';
         $pass = '123qweQWE';
 
@@ -30,37 +32,37 @@ class Proprietaires Extends Page {
         try {
             $pdo = new PDO($conStr, $user, $pass, $options);
             $stmt = $pdo->query('SELECT * FROM proprietairesvoitures');
-            
-            Proprietaires::displayFormatted($stmt);
 
+            return Proprietaires::displayFormatted($stmt);
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
     }
 
-    function displayFormatted($stmt) {
-        parent::beginBal("tr");
+    public function displayFormatted($stmt)
+    {
+        $retStr = parent::beginBal("tr");
 
-        parent::beginEndBal("td", "ID");
-        parent::beginEndBal("td", "Nom");
-        parent::beginEndBal("td", "Adresse");
+        $retStr .= parent::beginEndBal("td", "ID");
+        $retStr .= parent::beginEndBal("td", "Nom");
+        $retStr .= parent::beginEndBal("td", "Adresse");
+        $retStr .= parent::beginEndBal("td", "Supprimer");
 
-        parent::endBal("tr");
+        $retStr .= parent::endBal("tr");
 
-        foreach ($stmt as $row)
-        {
-            parent::beginBal("tr");
+        foreach ($stmt as $row) {
+            $retStr .= parent::beginBal("tr");
 
-            parent::beginEndBal("td", $row['id']);
-            parent::beginEndBal("td", $row['nom']);
-            parent::beginEndBal("td", $row['adresse']);
+            $retStr .= parent::beginEndBal("td", $row['id']);
+            $retStr .= parent::beginEndBal("td", $row['nom']);
+            $retStr .= parent::beginEndBal("td", $row['adresse']);
+            $lienSupprimer = "delete.php?proprietaire_id=" . $row['id'];
+            $retStr .= parent::beginEndBal("td", parent::createLink($lienSupprimer, 'Supprimer'));
 
-            parent::endBal("tr");
+            $retStr .= parent::endBal("tr");
         }
+        return $retStr;
     }
-
 }
 
 $page = new Proprietaires();
-
-?>
