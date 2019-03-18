@@ -4,6 +4,12 @@ namespace TP1;
 
 class Page
 {
+    protected $doc;
+    public function showDoc()
+    {
+        echo $this->doc;
+    }
+    
     public function initHTML($titre, $css)
     {
         $retStr = "<!DOCTYPE html>\n";

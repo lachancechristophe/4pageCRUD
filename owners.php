@@ -1,9 +1,11 @@
 <?php
+namespace TP1;
+
 require_once("functions.php");
 
 
 class Proprietaires extends Page
-{
+{   
     public function __construct()
     {
         $retStr = parent::initHTML("Proprietaires", "style.css");
@@ -13,7 +15,7 @@ class Proprietaires extends Page
         $retStr .= parent::endBal("table");
         $retStr .= parent::endBal("body");
         $retStr .= parent::endBal("html");
-        echo $retStr;
+        $this->doc .= $retStr;
     }
 
     public function connectAndFetch()
@@ -26,12 +28,12 @@ class Proprietaires extends Page
         $pass = '123qweQWE';
 
         $options = [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES   => false,
+            \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+            \PDO::ATTR_EMULATE_PREPARES   => false,
         ];
         try {
-            $pdo = new PDO($conStr, $user, $pass, $options);
+            $pdo = new \PDO($conStr, $user, $pass, $options);
             $stmt = $pdo->query('SELECT * FROM proprietairesvoitures');
 
             return Proprietaires::displayFormatted($stmt);
@@ -65,5 +67,3 @@ class Proprietaires extends Page
         return $retStr;
     }
 }
-
-$page = new Proprietaires();

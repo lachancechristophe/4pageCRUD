@@ -1,6 +1,7 @@
 <?php
-require_once("functions.php");
+namespace TP1;
 
+require_once("functions.php");
 
 class Voitures extends Page
 {
@@ -26,12 +27,12 @@ class Voitures extends Page
         $pass = '123qweQWE';
 
         $options = [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES   => false,
+            \PDO::ATTR_ERRMODE            => \PDO::ERRMODE_EXCEPTION,
+            \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
+            \PDO::ATTR_EMULATE_PREPARES   => false,
         ];
         try {
-            $pdo = new PDO($conStr, $user, $pass, $options);
+            $pdo = new \PDO($conStr, $user, $pass, $options);
             $stmt = $pdo->query('SELECT * FROM voituresexotiques ORDER BY proprietaire_id');
 
             return Voitures::displayFormatted($stmt);
