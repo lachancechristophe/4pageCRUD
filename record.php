@@ -1,4 +1,5 @@
 <?php
+
 require_once("functions.php");
 if ($_REQUEST['formname'] == "voitures") {
     if (empty($_REQUEST['id_voiture'])) {

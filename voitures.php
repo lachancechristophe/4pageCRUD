@@ -1,6 +1,7 @@
 <?php
 require_once("functions.php");
 
+
 class Voitures extends Page
 {
     public function __construct()

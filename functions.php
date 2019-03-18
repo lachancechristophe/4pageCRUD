@@ -1,4 +1,7 @@
 <?php
+
+namespace TP1;
+
 class Page
 {
     public function initHTML($titre, $css)
@@ -23,12 +26,12 @@ class Page
     public function insertInput($type, $name, $humantext)
     {
         $retStr = "<p><label for='" . $name . "'>" . $humantext . "</label><br/>";
-        return $retStr . "<input name='" . $name . "' type='" . $type . "' value='' /> </p>";
+        return $retStr . "<input name='" . $name . "' id='" . $name . "' type='" . $type . "' value='' /> </p>";
     }
 
     public function insertHidden($name, $value)
     {
-        return "<input type='hidden' name='" . $name . "' value='" . $value . "' ></input>";
+        return "<input type='hidden' name='" . $name . "' value='" . $value . "' />";
     }
 
     public function createLink($href, $text)

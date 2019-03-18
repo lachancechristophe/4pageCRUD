@@ -1,6 +1,7 @@
 <?php
 require_once("functions.php");
 
+
 class Proprietaires extends Page
 {
     public function __construct()

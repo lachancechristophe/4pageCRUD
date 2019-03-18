@@ -1,7 +1,7 @@
 <?php
 require_once("functions.php");
 
-class Formulaire extends Page
+class FormulaireVoiture extends Page
 {
     public function __construct()
     {
@@ -20,17 +20,11 @@ class Formulaire extends Page
         $retStr .= parent::beginEndBal("button", "Envoyer");
         $retStr .= parent::endBal("form");
 
-        $retStr .= parent::beginForm("POST", 'record.php', "proprietaires");
-        $retStr .= parent::insertInput("number", "id_proprietaire", "ID Proprietaire");
-        $retStr .= parent::insertInput("text", "nom", "Nom");
-        $retStr .= parent::insertInput("text", "adresse", "Adresse");
-        $retStr .= parent::insertHidden("formname", "proprietaires");
-        $retStr .= parent::beginEndBal("button", "Envoyer");
-        $retStr .= parent::endBal("form");
+        
         $retStr .= parent::endBal("body");
         $retStr .= parent::endBal("html");
         echo $retStr;
     }
 }
 
-$page = new Formulaire();
+$page = new FormulaireVoiture();
