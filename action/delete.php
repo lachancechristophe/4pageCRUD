@@ -1,5 +1,7 @@
 <?php
-require_once("functions.php");
+namespace TP1;
+
+require_once("../lib/functions.php");
 if (!empty($_REQUEST['voiture_id'])) {
     $pdo = ConnectReturnPDO();
     if (!empty($pdo)) {

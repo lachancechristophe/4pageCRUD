@@ -1,0 +1,29 @@
+body {
+    width: 800px;
+    margin: 0 auto;
+    padding: 10%;
+    background: gray;
+}
+
+h1, h2, h3 { margin: 0 auto; font-family: fantasy;}
+
+table, tr, td {
+    border: 1px dashed goldenrod;
+}
+
+tr:first {
+    font-weight: bold;
+}
+
+td {
+    padding: 5px;
+}
+
+a {
+    text-decoration: none;
+    color: blanchedalmond;
+}
+
+a:visited {
+    color: aquamarine; 
+}
